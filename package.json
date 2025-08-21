@@ -1,0 +1,11 @@
+{
+  "name": "@zyto/workflow-exec",
+  "version": "0.2.0",
+  "description": "BullMQ worker/orchestrator for Zyto (routes jobs to Zapier or n8n).",
+  "type": "module",
+  "main": "dist/worker.js",
+  "types": "dist/worker.d.ts",
+  "scripts": {
+    "dev": "tsx src/worker.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/worker.js"
