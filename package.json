@@ -14,3 +14,8 @@
     "bullmq": "^5.11.1",
     "ioredis": "^5.4.1",
     "undici": "^6.19.8"
+ },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.4"
