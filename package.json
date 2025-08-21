@@ -19,3 +19,7 @@
     "@types/node": "^20.11.30",
     "tsx": "^4.16.2",
     "typescript": "^5.5.4"
+ },
+  "engines": { "node": ">=20" },
+  "license": "MIT"
+  }
