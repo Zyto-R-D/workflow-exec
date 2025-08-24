@@ -81,3 +81,13 @@ export class Executor {
         await execNode(n);
       }
     };
+
+    try {
+      await execNode(graph.entry);
+      emit({ type: 'graph:complete' });
+      return { status: 'success', artifacts };
+    } catch (e: any) {
+      return { status: 'error', error: String(e?.message ?? e), artifacts };
+    }
+  }
+}
