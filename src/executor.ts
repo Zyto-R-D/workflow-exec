@@ -17,3 +17,11 @@ export class Executor {
       onEvent: opts?.onEvent ?? (() => {}),
     };
   }
+
+  private log(level: LogLevel, msg: string, meta?: Record<string, unknown>) {
+    const levels: LogLevel[] = ['debug', 'info', 'warn', 'error'];
+    if (levels.indexOf(level) >= levels.indexOf(this.opts.logLevel)) {
+      // eslint-disable-next-line no-console
+      console.log(`[${level}] ${msg}`, meta ?? '');
+    }
+  }
