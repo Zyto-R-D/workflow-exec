@@ -90,4 +90,19 @@ export class Executor {
       return { status: 'error', error: String(e?.message ?? e), artifacts };
     }
   }
+
+  private async invokeWithTimeout(
+    action: ReturnType<ActionRegistry['get']>,
+    node: NodeCommon,
+    ctxBase: Omit<ActionContext, 'signal'>
+  ) {
+    const ac = new AbortController();
+    const timeout = node.timeoutMs ?? 30_000;
+    const to = setTimeout(() => ac.abort('timeout'), timeout);
+    try {
+      return await action!.handler(node.input, { ...ctxBase, signal: ac.signal });
+    } finally {
+      clearTimeout(to);
+    }
+  }
 }
