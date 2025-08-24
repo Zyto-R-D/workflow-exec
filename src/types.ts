@@ -20,3 +20,10 @@ export type Graph = {
   nodes: Record<NodeId, NodeCommon>;
 };
 
+export type ActionContext = {
+  emit: (event: ExecEvent) => void;
+  setArtifact: (key: string, value: unknown) => void;
+  getArtifact: <T = unknown>(key: string) => T | undefined;
+  log: (level: LogLevel, message: string, meta?: Record<string, unknown>) => void;
+  signal: AbortSignal;
+};
