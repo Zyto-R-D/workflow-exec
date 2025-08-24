@@ -41,3 +41,9 @@ export type ExecEvent =
   | { type: 'node:success'; nodeId: NodeId; output?: unknown }
   | { type: 'node:error'; nodeId: NodeId; error: string }
   | { type: 'graph:complete' };
+
+export type ExecResult = {
+  status: 'success' | 'error';
+  error?: string;
+  artifacts: Record<string, unknown>;
+};
