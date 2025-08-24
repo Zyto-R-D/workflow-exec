@@ -72,4 +72,12 @@ export class Executor {
               return Promise.reject(err);
             }
             break; // continueOnError == true
-          
+          }
+        }
+      }
+
+      for (const n of node.next ?? []) {
+        // run sequentially for determinism (can parallelize later)
+        await execNode(n);
+      }
+    };
