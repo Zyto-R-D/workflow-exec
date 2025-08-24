@@ -27,3 +27,17 @@ export type ActionContext = {
   log: (level: LogLevel, message: string, meta?: Record<string, unknown>) => void;
   signal: AbortSignal;
 };
+
+export type ActionHandler = (input: unknown, ctx: ActionContext) => Promise<unknown>;
+
+export type ActionDef = {
+  type: string;
+  schema?: z.ZodTypeAny; // validates `input`
+  handler: ActionHandler;
+};
+
+export type ExecEvent =
+  | { type: 'node:start'; nodeId: NodeId; nodeType: string }
+  | { type: 'node:success'; nodeId: NodeId; output?: unknown }
+  | { type: 'node:error'; nodeId: NodeId; error: string }
+  | { type: 'graph:complete' };
