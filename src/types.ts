@@ -13,3 +13,10 @@ export type NodeCommon = {
   timeoutMs?: number;
   retries?: number;
   continueOnError?: boolean;
+};
+
+export type Graph = {
+  entry: NodeId;
+  nodes: Record<NodeId, NodeCommon>;
+};
+
