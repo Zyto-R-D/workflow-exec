@@ -44,4 +44,15 @@ export class Executor {
     const visited = new Set<string>();
 
     const execNode = async (id: string): Promise<void> => {
- 
+      if (visited.has(id)) return;
+      visited.add(id);
+
+      const node = graph.nodes[id];
+      if (!node) throw new Error(`Missing node: ${id}`);
+
+      const action = this.registry.get(node.type);
+      if (!action) throw new Error(`Unregistered action type: ${node.type}`);
+
+      emit({ type: 'node:start', nodeId: id, nodeType: node.type });
+
+      const retries = node.retries ?? 0;
