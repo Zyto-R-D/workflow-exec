@@ -25,3 +25,7 @@ export class Executor {
       console.log(`[${level}] ${msg}`, meta ?? '');
     }
   }
+
+  async run(graph: Graph, signal?: AbortSignal): Promise<ExecResult> {
+    const artifacts: Record<string, unknown> = {};
+    const emit = (e: ExecEvent) => this.opts.onEvent(e);
