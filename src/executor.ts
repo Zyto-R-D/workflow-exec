@@ -29,3 +29,19 @@ export class Executor {
   async run(graph: Graph, signal?: AbortSignal): Promise<ExecResult> {
     const artifacts: Record<string, unknown> = {};
     const emit = (e: ExecEvent) => this.opts.onEvent(e);
+
+    const setArtifact = (k: string, v: unknown) => (artifacts[k] = v);
+    const getArtifact = <T = unknown>(k: string) => artifacts[k] as T | undefined;
+
+    const ctxBase = {
+      emit,
+      setArtifact,
+      getArtifact,
+      log: this.log.bind(this),
+      signal: signal ?? new AbortController().signal,
+    };
+
+    const visited = new Set<string>();
+
+    const execNode = async (id: string): Promise<void> => {
+ 
