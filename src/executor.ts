@@ -56,3 +56,20 @@ export class Executor {
       emit({ type: 'node:start', nodeId: id, nodeType: node.type });
 
       const retries = node.retries ?? 0;
+      let attempt = 0;
+
+      while (true) {
+        try {
+          const output = await this.invokeWithTimeout(action, node, ctxBase);
+          emit({ type: 'node:success', nodeId: id, output });
+          break;
+        } catch (err: any) {
+          attempt++;
+          this.log('warn', `Node ${id} failed (attempt ${attempt})`, { err: String(err) });
+          if (attempt > retries) {
+            emit({ type: 'node:error', nodeId: id, error: String(err?.message ?? err) });
+            if (!node.continueOnError) {
+              return Promise.reject(err);
+            }
+            break; // continueOnError == true
+          
